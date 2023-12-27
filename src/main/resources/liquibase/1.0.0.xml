@@ -36,7 +36,13 @@
             <column name="created_on" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="last_updated_on" type="TIMESTAMP"/>
         </createTable>
-
+        <createTable tableName="TRANSACTION_CATEGORY">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="category_sup" type="UUID"/>
+        </createTable>
         <createTable tableName="TRANSACTION">
             <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
@@ -47,6 +53,11 @@
             <column name="original_wording" type="VARCHAR(255)"/>
             <column name="val" type="DOUBLE"/>
             <column name="formatted_value" type="VARCHAR(255)"/>
+            <column name="client_iban" type="VARCHAR(100)"/>
+            <column name="client_name" type="VARCHAR(100)"/>
+            <column name="category_id" type="UUID">
+                <constraints nullable="true" foreignKeyName="transaction_transaction_category_id" references="TRANSACTION_CATEGORY(id)"/>
+            </column>
         </createTable>
 
         <createTable tableName="CASH_FLOW">
@@ -74,5 +85,6 @@
         </insert>
 
     </changeSet>
+
 </databaseChangeLog>
 

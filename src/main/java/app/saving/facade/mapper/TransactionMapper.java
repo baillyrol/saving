@@ -18,6 +18,8 @@ public class TransactionMapper {
                 .setDate(LocalDate.parse(transaction.date()))
                 .setOriginalWording(transaction.originalWording())
                 .setVal(transaction.value())
+                .setClientIban(transaction.counterparty() != null ? transaction.counterparty().account_identification(): null)
+                .setClientName(transaction.counterparty() != null ? transaction.counterparty().label(): null)
                 .setFormattedValue(transaction.formatted_value());
     }
 }

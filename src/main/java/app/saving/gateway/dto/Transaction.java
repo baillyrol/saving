@@ -14,6 +14,11 @@ public record Transaction(
         @JsonProperty("value")
         Double value,
         @JsonProperty("formatted_value")
-        String formatted_value
+        String formatted_value,
+        @JsonProperty("counterparty")
+        CounterParty counterparty
 ) {
+    public record CounterParty(String account_identification, String label) {
+
+    }
 }

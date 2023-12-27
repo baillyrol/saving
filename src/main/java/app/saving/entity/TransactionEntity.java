@@ -23,4 +23,9 @@ public class TransactionEntity {
     private String originalWording;
     private Double val;
     private String formattedValue;
+    private String clientIban;
+    private String clientName;
+    @OneToOne
+    @JoinColumn(name = "category_id", nullable = true)
+    private TransactionCategoryEntity category;
 }
