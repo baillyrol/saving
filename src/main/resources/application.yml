@@ -1,0 +1,11 @@
+powens:
+  client:
+    id: 76376790
+    secret: b1ldIP1b_laQeW4FqRdssoGTimsF0ZTs
+  token: 8Gf_vMVuynPFA056dHYCDNTuJ2JcmOCWcdtQH/EAgXBs1F7XcLu5fQWQ/SghqvMtPIIdzASvIBxah2267/qNcnTiFXeTJb4_9XuQQBL19FCLWWrx6rq/rDJnJX2snxxs
+  url:
+    api: "https://tmp-test-vda-sandbox.biapi.pro/2.0"
+spring:
+  liquibase:
+    enabled: true
+    change-log: 'classpath:/liquibase/db.changelog-master.xml'

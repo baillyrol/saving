@@ -2,57 +2,58 @@ package app.saving.gateway;
 
 import app.saving.gateway.dto.AccountResponse;
 import app.saving.gateway.dto.TransactionResponse;
+import app.saving.gateway.dto.response.GetTokenResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 @Service
+@RequiredArgsConstructor
 public class PowensGateway {
+    @Value("${powens.client.id}")
+    private String clientId;
+    @Value("${powens.client.secret}")
+    private String clientSecret;
 
-    @Value("${powens.token}")
-    private String token;
+    private final RestClient powensRestClient;
 
-    @Value("${powens.url.api}")
-    private String baseUrl;
+    public AccountResponse getAccounts(String token) {
+        String uri = "/users/me/accounts";
 
-    @Value("${powens.url.accounts}")
-    private String getAccountsUrl;
-
-    @Value("${powens.url.transactions}")
-    private String getTransactions;
-
-    private final RestClient restClient = RestClient.create();
-
-    public AccountResponse getAccounts(Long connectionId) {
-        String uri = baseUrl + getAccountsUrl + connectionId.toString() + "/accounts";
-
-        return restClient
+        return powensRestClient
                 .get()
                 .uri(uri)
-                .header(HttpHeaders.AUTHORIZATION, "Basic " + token)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .retrieve()
                 .body(AccountResponse.class);
     }
 
-    public TransactionResponse getTransactions(Long accountId) {
-        String uri = baseUrl + getTransactions + accountId.toString() + "/transactions?limit=1000";
+    public TransactionResponse getTransactions(String accountId, String token) {
+        String uri = "/users/me/accounts/" + accountId + "/transactions?limit=1000";
 
-        return restClient
+        return powensRestClient
                 .get()
                 .uri(uri)
-                .header(HttpHeaders.AUTHORIZATION, "Basic " + token)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .retrieve()
                 .body(TransactionResponse.class);
     }
 
-    public TransactionResponse getNextTransactionPage(String uri) {
-        return restClient
-                .get()
-                .uri(uri)
-                .header(HttpHeaders.AUTHORIZATION, "Basic " + token)
-                .retrieve()
-                .body(TransactionResponse.class);
-    }
+    public GetTokenResponse getToken(String code) {
+        return powensRestClient
+                .post()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/auth/token/access")
+                        .queryParam("code", code)
+                        .queryParam("client_id", clientId)
+                        .queryParam("client_secret", clientSecret)
+                        .queryParam("grant_type", "authorization_code")
+                        .build()
 
+                )
+                .retrieve()
+                .body(GetTokenResponse.class);
+    }
 }

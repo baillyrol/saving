@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="v1.0.0" author="jeremy.vanderauwera">
+        <createTable tableName="APPLICATION_USER">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)"/>
+        </createTable>
+
+        <createTable tableName="CONNECTION">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="external_connection_id" type="VARCHAR(255)"/>
+            <column name="token" type="VARCHAR(255)"/>
+            <column name="user_id" type="UUID"/>
+        </createTable>
+
+        <createTable tableName="ACCOUNT">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="connection_id" type="UUID"/>
+            <column name="external_connection_id" type="VARCHAR(255)"/>
+            <column name="external_account_id" type="VARCHAR(255)"/>
+            <column name="iban" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="token" type="VARCHAR(255)"/>
+            <column name="coming_balance" type="DOUBLE"/>
+            <column name="formatted_balance" type="VARCHAR(255)"/>
+            <column name="created_on" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="last_updated_on" type="TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="TRANSACTION">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="external_id" type="VARCHAR(255)"/>
+            <column name="account_id" type="UUID"/>
+            <column name="date" type="DATE"/>
+            <column name="original_wording" type="VARCHAR(255)"/>
+            <column name="val" type="DOUBLE"/>
+            <column name="formatted_value" type="VARCHAR(255)"/>
+        </createTable>
+
+        <createTable tableName="CASH_FLOW">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="account_id" type="UUID"/>
+            <column name="first_date" type="DATE"/>
+            <column name="last_date" type="DATE"/>
+            <column name="cashflow_month" type="INT"/>
+            <column name="cashflow_year" type="INT"/>
+            <column name="income" type="DOUBLE"/>
+            <column name="expense" type="DOUBLE"/>
+            <column name="cash_flow" type="DOUBLE"/>
+            <column name="total_transaction" type="INT"/>
+        </createTable>
+
+        <insert tableName="application_user">
+            <column name="id" value="21a09fde-35a2-4d70-a007-1a50695b63a2"/>
+            <column name="username" value="Roland"/>
+        </insert>
+        <insert tableName="application_user">
+            <column name="id" value="34402e48-4861-4308-955c-14e4340c91ae"/>
+            <column name="username" value="jeremy"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
+

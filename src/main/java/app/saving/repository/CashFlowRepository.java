@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface CashFlowRepository extends JpaRepository<CashFlowEntity, Long> {
-    List<CashFlowEntity> findAllByAccountId(Long accountId);
-    CashFlowEntity findByAccountIdAndMonth(Long accountId, Integer month);
+public interface CashFlowRepository extends JpaRepository<CashFlowEntity, UUID> {
+    List<CashFlowEntity> findAllByAccountId(UUID accountId);
+    CashFlowEntity findByAccountIdAndMonth(UUID accountId, Integer month);
 
-    Optional<CashFlowEntity> findByAccountIdAndYearAndMonth(Long accountId, Integer month, Integer year);
+    Optional<CashFlowEntity> findByAccountIdAndYearAndMonth(UUID accountId, Integer month, Integer year);
 }
