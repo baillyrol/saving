@@ -20,6 +20,5 @@ public class ConnectionController {
     @GetMapping
     public void add(@RequestParam String code, @RequestParam("connection_id") String externalConnectionId){
         connectionFacade.add(code, externalConnectionId, user);
-
     }
 }

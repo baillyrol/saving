@@ -18,14 +18,18 @@
             </column>
             <column name="external_connection_id" type="VARCHAR(255)"/>
             <column name="token" type="VARCHAR(255)"/>
-            <column name="user_id" type="UUID"/>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="connection_user_fk" references="APPLICATION_USER(id)"/>
+            </column>
         </createTable>
 
         <createTable tableName="ACCOUNT">
             <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="connection_id" type="UUID"/>
+            <column name="connection_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="account_connection_fk" references="CONNECTION(id)"/>
+            </column>
             <column name="external_connection_id" type="VARCHAR(255)"/>
             <column name="external_account_id" type="VARCHAR(255)"/>
             <column name="iban" type="VARCHAR(255)"/>
@@ -41,14 +45,21 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(255)"/>
-            <column name="category_sup" type="UUID"/>
+            <column name="category_sup" type="UUID">
+                <constraints nullable="true" foreignKeyName="transaction_category_transaction_category_fk" references="TRANSACTION_CATEGORY(id)"/>
+            </column>
         </createTable>
+        <createIndex tableName="TRANSACTION_CATEGORY" indexName="transaction_category_name_index">
+            <column name="name"/>
+        </createIndex>
         <createTable tableName="TRANSACTION">
             <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="external_id" type="VARCHAR(255)"/>
-            <column name="account_id" type="UUID"/>
+            <column name="account_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="transaction_account_fk" references="ACCOUNT(id)"/>
+            </column>
             <column name="date" type="DATE"/>
             <column name="original_wording" type="VARCHAR(255)"/>
             <column name="val" type="DOUBLE"/>
@@ -59,12 +70,20 @@
                 <constraints nullable="true" foreignKeyName="transaction_transaction_category_id" references="TRANSACTION_CATEGORY(id)"/>
             </column>
         </createTable>
+        <createIndex tableName="TRANSACTION" indexName="transaction_original_wording_index">
+            <column name="original_wording"/>
+        </createIndex>
+        <createIndex tableName="TRANSACTION" indexName="transaction_client_iban_index">
+            <column name="client_iban"/>
+        </createIndex>
 
         <createTable tableName="CASH_FLOW">
             <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="account_id" type="UUID"/>
+            <column name="account_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="cashflow_account_fk" references="ACCOUNT(id)"/>
+            </column>
             <column name="first_date" type="DATE"/>
             <column name="last_date" type="DATE"/>
             <column name="cashflow_month" type="INT"/>
@@ -83,7 +102,16 @@
             <column name="id" value="34402e48-4861-4308-955c-14e4340c91ae"/>
             <column name="username" value="jeremy"/>
         </insert>
-
+        <createTable tableName="TRANSACTION_CATEGORY_PATTERN">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="iban_pattern" type="VARCHAR(255)"/>
+            <column name="original_wording_pattern" type="VARCHAR(255)"/>
+            <column name="category_id" type="UUID">
+                <constraints nullable="true" foreignKeyName="transaction_category_pattern_transaction_catagory" references="TRANSACTION_CATEGORY(id)"/>
+            </column>
+        </createTable>
     </changeSet>
 
 </databaseChangeLog>

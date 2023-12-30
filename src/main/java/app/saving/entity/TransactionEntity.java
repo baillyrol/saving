@@ -25,7 +25,7 @@ public class TransactionEntity {
     private String formattedValue;
     private String clientIban;
     private String clientName;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "category_id", nullable = true)
     private TransactionCategoryEntity category;
 }

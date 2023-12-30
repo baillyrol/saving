@@ -29,7 +29,7 @@ public class SavingController {
     }
 
     @GetMapping("/accounts/{accountId}/cashFlows/{month}/details")
-    private CashFlowDetailsDto getCashFlowDetails(@PathVariable UUID accountId, @PathVariable Integer month) {
+    public CashFlowDetailsDto getCashFlowDetails(@PathVariable UUID accountId, @PathVariable Integer month) {
         return savingFacade.getCashFlowDetails(accountId, month);
     }
 
