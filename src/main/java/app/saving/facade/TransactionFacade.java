@@ -40,7 +40,8 @@ public class TransactionFacade {
                     transactionRepository.updateTransactionCategoryFromPattern(
                             transactionEntity.getCategory().getId(),
                             transactionCategoryPatternEntity.getIbanPattern(),
-                            transactionCategoryPatternEntity.getOriginalWordingPattern()
+                            transactionCategoryPatternEntity.getOriginalWordingPattern(),
+                            transactionEntity.getAccountId()
                     );
 
                 });

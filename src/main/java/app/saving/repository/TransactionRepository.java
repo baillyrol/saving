@@ -17,7 +17,7 @@ public interface TransactionRepository extends CrudRepository<TransactionEntity,
     boolean existsByExternalId(String externalId);
 
     @Modifying
-    @Query(value = "UPDATE TRANSACTION SET category_id = :categoryId WHERE (client_iban like :ibanPattern OR original_wording like :originalWordingPattern) and category_id is null", nativeQuery = true)
-    void updateTransactionCategoryFromPattern(UUID categoryId, String ibanPattern, String originalWordingPattern);
+    @Query(value = "UPDATE TRANSACTION SET category_id = :categoryId WHERE (client_iban like :ibanPattern OR original_wording like :originalWordingPattern) and category_id is null and account_id = :accountId", nativeQuery = true)
+    void updateTransactionCategoryFromPattern(UUID categoryId, String ibanPattern, String originalWordingPattern, UUID accountId);
 
 }
