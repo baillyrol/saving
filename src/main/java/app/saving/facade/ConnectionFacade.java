@@ -1,7 +1,6 @@
 package app.saving.facade;
 
 import app.saving.entity.ConnectionEntity;
-import app.saving.facade.mapper.SynchronizationFacade;
 import app.saving.gateway.PowensGateway;
 import app.saving.gateway.dto.response.GetTokenResponse;
 import app.saving.repository.ConnectionRepository;

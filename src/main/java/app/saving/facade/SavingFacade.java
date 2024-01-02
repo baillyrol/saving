@@ -34,8 +34,8 @@ public class SavingFacade {
 
         AccountEntity accountEntity = accountRepository.findById(accountId).orElseThrow(IllegalArgumentException::new);
         CashFlowEntity accountIdAndMonth = cashFlowRepository.findByAccountIdAndMonth(accountId, month);
-        LocalDate fromDate = LocalDate.of(2023, month, 1);
-        LocalDate endDate = LocalDate.of(2023, month, fromDate.lengthOfMonth());
+        LocalDate fromDate = LocalDate.of(2024, month, 1);
+        LocalDate endDate = LocalDate.of(2024, month, fromDate.lengthOfMonth());
 
         List<TransactionEntity> transactionEntities = this.transactionRepository
                 .findAllByAccountIdAndDateBetweenOrderByDate(accountId, fromDate, endDate);

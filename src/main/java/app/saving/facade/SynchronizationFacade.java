@@ -1,9 +1,11 @@
-package app.saving.facade.mapper;
+package app.saving.facade;
 
 import app.saving.entity.AccountEntity;
 import app.saving.entity.CashFlowEntity;
 import app.saving.entity.ConnectionEntity;
 import app.saving.entity.TransactionEntity;
+import app.saving.facade.mapper.AccountMapper;
+import app.saving.facade.mapper.TransactionMapper;
 import app.saving.gateway.PowensGateway;
 import app.saving.repository.AccountRepository;
 import app.saving.repository.CashFlowRepository;

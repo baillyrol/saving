@@ -42,6 +42,7 @@ public class PowensGateway {
     }
 
     public GetTokenResponse getToken(String code) {
+
         return powensRestClient
                 .post()
                 .uri(uriBuilder -> uriBuilder
